@@ -114,32 +114,38 @@ exports.getProducts = async(req,res)=>{
 exports.getProductById = async(req,res)=>{
     try {
         const {productId} = req.params;
+        console.log("HEllowold")
         if(!productId) 
             return res.status(404).json({
                 success: false,
                 message: "Product Id is Required"
             })
 
-        let product = await ProductModel.findById(productId);
-        if(!product) 
+        let productDetails = await ProductModel.findById(productId);
+        if(!productDetails) 
             return res.status(404).json({
                 success: false,
                 message: "Product Not Found"
             })
 
-        const categoryDetails = await CategoryModel.findById(product.category);
+        const categoryDetails = await CategoryModel.findById(productDetails.category);
         if(!categoryDetails) 
             return res.status(404).json({
                 success: false,
                 message: "Category Not Found"
             })
 
-        product.category=categoryDetails;
+        const manufacturerDetails = await UserModel.findById(productDetails.manufacturer);
 
+        productDetails.category=categoryDetails;
+        productDetails.manufacturer=null;
+
+        console.log(manufacturerDetails.firstName+'lkdsjfl')
         return res.status(200).json({
             success: true,
-            message: "Product Found",
-            product
+            message: "productDetails Found",
+            productDetails,
+            manufacturer: manufacturerDetails.firstName+" "+manufacturerDetails.lastName
         });
     } catch (error) {
         return res.status(500).json({
