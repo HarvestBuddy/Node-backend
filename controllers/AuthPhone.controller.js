@@ -219,7 +219,7 @@ exports.loginUsingPhoneNumber = async (req, res) => {
                 message: "Invalid OTP format. OTP should be a 6-digit number.",
             });
         }
-        console.log(otp)
+        console.log("Hello")
         const recentOTP = await OTPPhone.findOne({ phoneNumber })
             .sort({ createdAt: -1 })
             .limit(1);

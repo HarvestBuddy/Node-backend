@@ -1,6 +1,6 @@
 const UserModel=require('../models/User.model')
 const ProductModel=require('../models/ProductData.model')
-const Order=require('../models/Order.model')
+const OrderModel=require('../models/Order.model')
 const { uploadMediaToCloudinary } = require("../utils/mediaUploader"); 
 const CategoryModel = require('../models/Category.model');
 
@@ -8,6 +8,7 @@ const CategoryModel = require('../models/Category.model');
 exports.addProduct=async(req,res)=>{
     try{
         const {name,price,quantity,description,location,categoryId}=req.body
+        console.log(req.body);
         if(!name||!price||!quantity||!description||!location||!categoryId){
             return res.status(404).json({
                 success: false,
@@ -105,6 +106,35 @@ exports.getProducts = async(req,res)=>{
         return res.status(500).json({
             success: false,
             message: "An Error Occured while getting products",
+            error: error.message
+        })
+    }
+}
+
+
+exports.addCategory = async(req,res)=>{
+    try {
+        const {name,description} = req.body;
+        if(!name||!description) 
+            return res.status(404).json({
+                success: false,
+                message: "Category Name is Required"
+            })
+
+        const category = await CategoryModel.create({
+            name,
+            description
+        })
+
+        return res.status(201).json({
+            success: true,
+            message: "Category Added Successfully",
+            data: category
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "An Error Occured while adding category",
             error: error.message
         })
     }
