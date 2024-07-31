@@ -111,6 +111,45 @@ exports.getProducts = async(req,res)=>{
     }
 }
 
+exports.getProductById = async(req,res)=>{
+    try {
+        const {productId} = req.params;
+        if(!productId) 
+            return res.status(404).json({
+                success: false,
+                message: "Product Id is Required"
+            })
+
+        let product = await ProductModel.findById(productId);
+        if(!product) 
+            return res.status(404).json({
+                success: false,
+                message: "Product Not Found"
+            })
+
+        const categoryDetails = await CategoryModel.findById(product.category);
+        if(!categoryDetails) 
+            return res.status(404).json({
+                success: false,
+                message: "Category Not Found"
+            })
+
+        product.category=categoryDetails;
+
+        return res.status(200).json({
+            success: true,
+            message: "Product Found",
+            product
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "An Error Occured while getting product",
+            error: error.message
+        })
+    }
+}
+
 
 exports.addCategory = async(req,res)=>{
     try {

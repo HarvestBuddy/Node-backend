@@ -6,6 +6,7 @@ const {addProduct, getProducts, addCategory} = require('../controllers/Product.c
 
 router.post('/createProduct',auth,isSeller,addProduct);
 router.get('/getProducts',getProducts);
+router.get('/getProducts/:productId',getProducts);
 
 router.post('/createCategory',auth,isSeller,addCategory);
 
