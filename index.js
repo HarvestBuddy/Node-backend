@@ -4,19 +4,18 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
-const swaggerUI = require("swagger-ui-express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
 const cloudinary = require('./config/cloudinary')
 
-const userRoutes = require("./routes/User");
-const profileRoutes = require("./routes/Profile");
+const userRoutes = require("./routes/User.routes");
+const productRoutes = require('./routes/Product.routes')
 
-const swaggerSpec = require("./swagger");
+// const swaggerSpec = require("./swagger");
 
 const {cloudinaryConnect} = require('./config/cloudinary'); 
-const fileparser = require("./config/parseFile");
+// const fileparser = require("./config/parseFile");
 const upload = require("./middlewares/multer");
 
 require("dotenv").config({ path: ".env" });
@@ -39,7 +38,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "tmp/" }));
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.set("json spaces", 5);
 
@@ -81,7 +79,6 @@ app.get("/api/v1/", (req, res) => {
 });
 
 app.use("/api/v1/auth", userRoutes);
-app.use("/api/v1/profile", profileRoutes);
 
 connectToDatabase();
 

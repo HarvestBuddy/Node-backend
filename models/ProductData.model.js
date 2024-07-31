@@ -27,7 +27,9 @@ const productData = new mongoose.Schema({
         required: true,
     },
     manufacturer:{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
     active: {
         type: Boolean,

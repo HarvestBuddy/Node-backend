@@ -2,18 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const { signUpPhone, loginUsingPhoneNumber, sendOTPPhone, changePasswordPhone, forgotPasswordPhone, refreshRoute,
-  logout } = require('../controllers/authPhone')
+  logout } = require('../controllers/AuthPhone.controller')
 
-const { sendOTP } = require('../controllers/auth')
+const { sendOTP } = require('../controllers/Auth.controller')
 
-const { verifyOTPEmail, verifyOTPPhone } = require('../controllers/otp')
+const { verifyOTPEmail, verifyOTPPhone } = require('../controllers/OTP.controller')
 
 const {
   resetPasswordToken,
   resetPassword,
-} = require("../controllers/resetPassword");
+} = require("../controllers/ResetPassword.controller");
 
-const { resetPasswordTokenPhone, resetPasswordPhone } = require('../controllers/resetPasswordPhone')
+const { resetPasswordTokenPhone, resetPasswordPhone } = require('../controllers/ResetPasswordPhone.controller')
 
 const { auth } = require("../middlewares/middleware");
 
@@ -51,24 +51,5 @@ router.post("/reset-Password", resetPassword);  //Working
 
 router.post("/reset-Password-Token-Phone", resetPasswordTokenPhone); //Working
 router.post("/reset-Password-Phone", resetPassword); //Working
-
-router.post('/randomRoute',auth,async(req,res)=>{
-  try {
-    const {phoneNumber, id} = req.user;
-    console.log(req.user,'lkdjf;alsjdlckas clwkjdlkj hellow rodld');
-    return res.status(200).json({
-      success: true,
-      message: "Hello World",
-      phoneNumber,
-      id
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "An Error Occurred",
-      error: error.message
-    })
-  }
-})
 
 module.exports = router;

@@ -51,7 +51,10 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
     products:[
-      
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductData"
+      }
     ],
     image: {
       type: String,

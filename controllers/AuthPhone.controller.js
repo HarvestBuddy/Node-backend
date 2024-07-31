@@ -1,6 +1,6 @@
-const User = require("../models/user");
-const OTPPhone = require("../models/otpPhone");
-const Profile = require("../models/profile");
+const User = require("../models/User.model");
+const OTPPhone = require("../models/OTPPhone.model");
+const Profile = require("../models/Profile.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 

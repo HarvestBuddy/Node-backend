@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User, Owner, Admin, Staff } = require("../utils/enumTypes");
+const { User, Seller, Admin, Staff } = require("../utils/enumTypes");
 require("dotenv").config();
 
 exports.auth = async (req, res, next) => {
@@ -53,12 +53,12 @@ exports.isUser = async (req, res, next) => {
   }
 };
 
-exports.isOwner = async (req, res, next) => {
+exports.isSeller = async (req, res, next) => {
   try {
-    if (req.user.accountType !== Owner) {
+    if (req.user.accountType !== Seller) {
       return res.status(401).json({
         success: false,
-        message: "This is a Protected Route For Owners Only",
+        message: "This is a Protected Route For Sellers Only",
       });
     }
     next();

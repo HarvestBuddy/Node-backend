@@ -26,7 +26,7 @@ async function sendSMS(phoneNumber, otp){
   
     try {
       const message = await client.messages.create({
-        body: `Your Verification Code is ${otp}`,
+        body: `Your Verification Code to register for harvest buddy : ${otp}`,
         from: process.env.PHONE_NUMBER,
         to: `+91${phoneNumber}`
       })
@@ -40,7 +40,7 @@ async function sendSMS(phoneNumber, otp){
         errorMessage: "SMS sending failed",
       };
     }
-  }
+}
 
 otpPhoneSchema.pre('save', async function (next) {
     const phoneNumber = this.phoneNumber;
