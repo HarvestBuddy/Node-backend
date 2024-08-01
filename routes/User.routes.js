@@ -39,6 +39,21 @@ router.post('/sendOTP', sendOTP) //Working
 router.post("/verifyOTPPhone", verifyOTPPhone); //Working
 router.post('/verifyOTPEmail', verifyOTPEmail) //Working
 
+router.post('/verification',auth, async(req,res)=>{
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Verification Successful",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "An Error Occurred",
+      error: error.message
+    })
+  }
+})
+
 router.post("/signUp", signUpPhone); //Working
 router.post('/login', loginUsingPhoneNumber)  //Working
 router.put("/changePassword", auth, changePasswordPhone); //Working
